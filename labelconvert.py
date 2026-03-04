@@ -1,6 +1,9 @@
 import json
-json_path = "labels/2025-11-18-13-51-31_Velodyne-VLP-16-Data (Frame 196).json"
-output_path = "labels/2025-11-18-13-51-31_Velodyne-VLP-16-Data (Frame 196).txt"
+import glob
+import os
+
+labels_dir = "labels"
+
 def convert_labelcloud_json_to_txt(json_path, output_path):
     with open(json_path, 'r') as f:
         data = json.load(f)
@@ -27,4 +30,12 @@ def convert_labelcloud_json_to_txt(json_path, output_path):
         for line in lines:
             f.write(line + "\n")
 
-convert_labelcloud_json_to_txt(json_path, output_path)
+json_files = glob.glob(os.path.join(labels_dir, "*.json"))
+for json_path in json_files:
+    if os.path.basename(json_path) == "_classes.json":
+        continue
+    output_path = json_path.replace(".json", ".txt")
+    convert_labelcloud_json_to_txt(json_path, output_path)
+    print(f"Converted: {json_path} -> {output_path}")
+
+print(f"Done. Converted {len(json_files) - 1} files.")
