@@ -15,9 +15,8 @@ def convert_labelcloud_json_to_txt(json_path, output_path):
         y = obj["centroid"]["y"]
         z = obj["centroid"]["z"]
 
-        # IMPORTANT: swap length/width
-        dx = obj["dimensions"]["width"]   # likely true length
-        dy = obj["dimensions"]["length"]  # likely true width
+        dx = obj["dimensions"]["length"]
+        dy = obj["dimensions"]["width"]
         dz = obj["dimensions"]["height"]
 
         heading = obj["rotations"]["z"]
